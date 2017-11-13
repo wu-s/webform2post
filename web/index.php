@@ -15,6 +15,8 @@ function createModel($params){
             $rtn[$value] = '';
         }
     }
+
+    $rtn['ip_address'] = $rtn['ip_address'] ? $rtn['ip_address'] : getRemoteIp();
     return $rtn;
 }
 

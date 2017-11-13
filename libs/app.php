@@ -54,5 +54,20 @@ function get_portal_param_mapping(){
     );
 }
 
+function getRemoteIp(){
+    $rtn = '';
+    if(!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+        $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+        $ips=explode (', ', $_SERVER['HTTP_X_FORWARDED_FOR']);
+        for ($i=0; $i < count($ips); $i++){
+            if(!preg_match('/^(10|172\.16|192\.168)\./' , $ips[$i])) {
+                $rtn = $ips[$i];
+                break;
+            }
+        }
+    }
+    return $rtn;
+}
+
 global $app;
 
