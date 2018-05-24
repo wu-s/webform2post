@@ -10,7 +10,7 @@ function leadportal_notification($solar){
 	$leadportal = 'https://tl.leadportal.com/genericPostlead.php';
 	//$leadportal = 'https://tl.leadportal.com/genericPostlead.php?Test_Lead=1&TYPE=19&s1=s1&s2=s2&s3=s3&s4=s4&s5=s5&User_Agent=User_Agent&SRC=test&Landing_Page=landing&IP_Address=75.2.92.149&Sub_ID=12&Pub_ID=12345&Optout=Optout&Unique_Identifier=Unique_Identifier&___pageid___=__pageid__&TCPA_Consent=Yes&TCPA_Language=TCPA_Language&universal_leadid=LeadiD_Token&xxTrustedFormCertUrl=TrustedFormCertUrl&First_Name=John&Last_Name=Doe&Address=123%20Main%20St.&City=Chicago&State=IL&Zip=60610&Primary_Phone=3125555076&Secondary_Phone=3125553713&County=County&Email=test@nags.us&property_ownership=Own&Shade=A%20Little%20Shade&Monthly_Electric_Bill=$0-$100&Utility_Provider=Utility_Provider';
 	$postfields = get_portal_notificate_param($solar);
-	unset($postfields['Redirect_URL']);
+//	unset($postfields['Redirect_URL']);
 	//unset($postfields['Monthly_Electric_Bill']);
 
 	$rtn = array('post_url' => $leadportal, 'params' => $postfields, 'success' => true);
@@ -22,8 +22,8 @@ function leadportal_notification($solar){
 	curl_setopt($ch, CURLOPT_POST, 1);
 	curl_setopt($ch, CURLOPT_POSTFIELDS, $postfields);
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0); // On dev server only!
-    //print_r($rtn);
-    //exit(0);
+//    print_r($rtn);
+//    exit(0);
 	$result = curl_exec($ch);
 	$rtn['response'] = $result;
 	if(!preg_match('/<status>/', $result) || preg_match('/<status>Error<\/status>/', $result)){
@@ -43,6 +43,13 @@ function get_portal_default_param(){
 			'Skip_XSL'	=> 1,
 			'Test_Lead'	=> 1,
 		);
+}
+
+function get_exclude_param(){
+    return array(
+        'Redirect_URL'              => 1,
+        'Match_With_Partner_ID'     => 1,
+    );
 }
 
 /*
@@ -85,7 +92,11 @@ function get_portal_notificate_param($solar){
 	$params = array();
 	$map = get_portal_param_mapping();
 	$default = get_portal_default_param();
+    $excludes = get_exclude_param();
 	foreach ($map as $key => $value) {
+        if(array_key_exists($key, $excludes)){
+            continue;
+        }
 		if(array_key_exists($key, $default)){
 			$params[$key] = $default[$key];
 		}
