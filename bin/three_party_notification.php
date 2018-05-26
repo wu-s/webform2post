@@ -49,6 +49,8 @@ function get_exclude_param(){
     return array(
         'Redirect_URL'              => 1,
         'Match_With_Partner_ID'     => 1,
+        'Test_Lead'                 => 1,
+        'Skip_XSL'                  => 1,
     );
 }
 
