@@ -10,6 +10,7 @@
 - 增加type=21/23/25/27数据类型
 
 新的type=21的类型，完整的参数列表见
+
 https://tl.leadportal.com/new_api/index.php?action=detail&TYPE=21&func=genericPostlead
 https://tl.leadportal.com/new_api/index.php?action=detail&TYPE=23&func=genericPostlead
 https://tl.leadportal.com/new_api/index.php?action=detail&TYPE=25&func=genericPostlead
