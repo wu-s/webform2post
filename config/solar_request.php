@@ -55,8 +55,6 @@ return array(
 
     //https://tl.leadportal.com/new_api/index.php?action=detail&TYPE=25&func=genericPostlead
     //Leadtype: Windows
-    //Leadtype: Home Security
-    //https://tl.leadportal.com/new_api/index.php?action=detail&TYPE=27&func=genericPostlead
     '25' => array(
         'post_param' => array(
             'TYPE',
