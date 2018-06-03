@@ -1,0 +1,87 @@
+CREATE TABLE `solar_request` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `type` int(11) NOT NULL,
+  `data` LONGTEXT default null,
+  `insert_date` datetime NOT NULL,
+  `update_date` datetime NOT NULL,
+  `step` int(11) NOT NULL,
+  `status` int(11) NOT NULL,
+  `retried_times` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `create_and_status` (`insert_date`,`status`),
+  KEY `status` (`status`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+CREATE TABLE `request_post_log` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `solar_request_id` int(11) DEFAULT NULL,
+  `success` int(11) DEFAULT NULL,
+  `request` blob,
+  `response` blob,
+  `insert_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `solar_request_id` (`solar_request_id`),
+  KEY `insert_date` (`insert_date`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+CREATE TABLE `post_log` (
+  `post_log_id` int(11) NOT NULL AUTO_INCREMENT,
+  `solar_id` int(11) DEFAULT NULL,
+  `success` int(11) DEFAULT NULL,
+  `request` blob,
+  `response` blob,
+  `insert_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`post_log_id`),
+  KEY `solar_id` (`solar_id`),
+  KEY `insert_date` (`insert_date`)
+) ENGINE=InnoDB AUTO_INCREMENT=257865 DEFAULT CHARSET=latin1;
+
+CREATE TABLE `solar` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `type` int(11) NOT NULL,
+  `test_lead` tinyint(1) NOT NULL,
+  `skip_xsl` tinyint(1) NOT NULL,
+  `match_with_partner_id` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `redirect_url` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `s1` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `s2` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `s3` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `s4` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `s5` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `user_agent` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `src` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `landing_page` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `ip_address` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `sub_id` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `pub_id` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `optout` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+  `unique_identifier` varchar(40) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `pageid` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `tcpa_consent` tinyint(1) NOT NULL,
+  `tcpa_language` varchar(1000) COLLATE utf8_unicode_ci NOT NULL,
+  `universal_leadid` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `xx_trusted_form_cert_url` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `first_name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `last_name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `address` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `city` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `state` varchar(2) COLLATE utf8_unicode_ci NOT NULL,
+  `zip` varchar(8) COLLATE utf8_unicode_ci NOT NULL,
+  `primary_phone` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
+  `secondary_phone` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
+  `county` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `email` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `property_ownership` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
+  `shade` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `monthly_electric_bill` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `utility_provider` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `insert_date` datetime NOT NULL,
+  `update_date` datetime NOT NULL,
+  `step` int(11) NOT NULL,
+  `status` int(11) NOT NULL,
+  `retried_times` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `create_and_status` (`insert_date`,`status`),
+  KEY `status` (`status`)
+) ENGINE=InnoDB AUTO_INCREMENT=198022 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
