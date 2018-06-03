@@ -39,7 +39,7 @@ function getPortalParams($type, $config, $data){
     $excludesParam = $config['excludes_param'];
     $postParam = $config['post_param'];
     foreach($postParam as $param){
-        if(!array_key_exists($param, $excludesParam)){
+        if(array_key_exists($param, $excludesParam)){
             continue;
         }
         if(array_key_exists($param, $data)){
@@ -58,7 +58,7 @@ while(1){
     $sth = $pdo->prepare("SELECT * FROM solar_request WHERE status in (?, ?)");
     $sth->execute(array(1, 3));
     $results = $sth->fetchAll(PDO::FETCH_ASSOC);
-    $sth = $pdo->prepare('update solar set status = ?, update_date = now(), retried_times = retried_times + ? where id = ?');
+    $sth = $pdo->prepare('update solar_request set status = ?, update_date = now(), retried_times = retried_times + ? where id = ?');
     foreach ($results as $solar) {
         if($solar['status'] == 3 && $now < (strtotime($solar['update_date']) + $solar['retried_times'] * 3600)){
             continue;
@@ -86,7 +86,7 @@ while(1){
             }
         }
 
-        $statement = $pdo->prepare("insert into request_post_log (solar_id, success, request, response, insert_date) values (?, ?, ?, ?, now())");
+        $statement = $pdo->prepare("insert into request_post_log (solar_request_id, success, request, response, insert_date) values (?, ?, ?, ?, now())");
         $statement->execute(array($solar['id'], $rtn['success'], json_encode(array($rtn['params'], $rtn['post_url'])), $rtn['response']));
         sleep(30);
     }
