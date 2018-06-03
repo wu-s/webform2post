@@ -6,7 +6,8 @@
 require_once(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'libs'.DIRECTORY_SEPARATOR.'app.php');
 
 $type = $_REQUEST['TYPE'];
-if(!in_array($type, array(21, 23, 25, 27))){
+$solar_request_config = $app['solar_request_config'];
+if(!in_array($type, array_keys($solar_request_config))){
     exit(0);
 }
 
@@ -22,7 +23,7 @@ $redirect_url = isset($_REQUEST['Redirect_URL']) ? $_REQUEST['Redirect_URL'] : '
 $sql = 'insert into solar_request (`type`,`data`,`step`, `status`, `insert_date`,`update_date`) values( ?, ?, ?, ?, ?, ?)';
 #error_log($sql);
 $sth = $pdo->prepare($sql);
-$sth->execute(array_values($type, json_encode($request), 0, 1, $insertDate, $insertDate));
+$sth->execute(array($type, json_encode($request), 0, 1, $insertDate, $insertDate));
 
 header('location: '.$redirect_url);
 exit();
