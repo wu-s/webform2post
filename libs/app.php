@@ -7,6 +7,7 @@ date_default_timezone_set('UTC');
 
 $app = array();
 $app['config'] = require(ENVI_ROOT_DIR.'/config/config.php');
+$app['solar_request_config'] = require(ENVI_ROOT_DIR.'/config/solar_request.php');
 
 $pdo_config = $app['config']['PDO'];
 $app['db'] = new PDO('mysql:host='.$pdo_config['database_host'].';dbname='.$pdo_config['database_name'].';port='.$pdo_config['database_port'].';charset='.$pdo_config['charset'], $pdo_config['database_user'], $pdo_config['database_password']);
